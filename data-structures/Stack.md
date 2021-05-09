@@ -1,6 +1,6 @@
 # Stack
 
-Dynamic sets that grow and shrink with a **last-in, first-out** policy.
+Dynamic sets that grow and shrink with a **last-in, first-out (LIFO)** policy.
 
 
 ## Operations
@@ -34,21 +34,21 @@ public class Stack<T> {
         elements = (T[])new Object[size];
     }
 
-    public void push(T element) {
-        if(pointer < elements.length)
+    public void push(T element) throws RuntimeException {
+        if(pointer < elements.length - 1)
             elements[++pointer] = element;
         else
             throw new RuntimeException("Overflow");
     }
 
-    public T pop() {
+    public T pop() throws RuntimeException {
         if(!isEmpty()) {
             return elements[pointer--];
         }
         throw new RuntimeException("Underflow");
     }
 
-    public T peek() {
+    public T peek() throws RuntimeException {
         if(!isEmpty()) {
             return elements[pointer];
         }
@@ -57,6 +57,13 @@ public class Stack<T> {
 
     public boolean isEmpty() {
         return pointer < 0;
+    }
+
+    public int size() {
+        if(isEmpty())
+            return 0;
+        else
+            return pointer + 1;
     }
 }
 ```
