@@ -73,9 +73,9 @@ public class Stack<T> {
 ```java
 public class Stack<T> {
 
-    class Node<T> {
-        T val;
-        Node<T> next;
+    private static class Node<T> {
+        private T val;
+        private Node<T> next;
 
         Node(T val, Node<T> next) {
             this.val = val;
