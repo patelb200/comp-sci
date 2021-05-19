@@ -71,3 +71,77 @@ public class Queue<T> {
     }
 }
 ```
+
+### Linked Nodes
+
+```java
+public class Queue<T> {
+
+    private static class Node<T> {
+        private T val;
+        private Node<T> next;
+
+        Node(T val, Node<T> next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
+
+    private T[] elements;
+    private int size;
+    private final int capacity;
+    private Node<T> head;
+    private Node<T> tail;
+
+    public Queue(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public void enqueue(T element) throws RuntimeException {
+
+        if (isFull())
+            throw new RuntimeException("Overflow");
+
+        if (this.head == null) {
+            this.head = new Node<>(element, null);
+            this.tail = this.head;
+        } else {
+            this.tail.next = new Node<>(element, null);
+            this.tail = this.tail.next;
+        }
+
+        size++;
+    }
+
+    public T dequeue() throws RuntimeException {
+
+        if (isEmpty())
+            throw new RuntimeException("Underflow");
+
+        Node<T> poll = this.head;
+        this.head = poll.next;
+        size--;
+        return poll.val;
+    }
+
+    public T peek() throws RuntimeException {
+
+        if (isEmpty())
+            throw new RuntimeException("Underflow");
+
+        return this.head.val;
+    }
+
+    public boolean isFull() {
+        return size() == this.capacity;
+    }
+
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    public int size() {
+        return size;
+    }
+}
+```
