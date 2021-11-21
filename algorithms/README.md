@@ -5,5 +5,5 @@ To run `.jsh` files, you need minimum jdk 9.
 ## Run script
 
 ``` sh
-jshell selection-sort.jsh
+jshell selection_sort.jsh
 ```
