@@ -8,16 +8,16 @@ There are 3 main operations that need to occur.
 
 Input n disks:  
 1. Move top n - 1 disks from rod 1 to rod 2
-   - Use rod 3 as an aux
+   - Use rod 3 as an aux rod
 2. Move 1 disk from rod 1 to rod 3  
-3. Move top n - 1 disks from peg 2 to peg 3
-   - use rod 1 as an aux
+3. Move top n - 1 disks from rod 2 to rod 3
+   - use rod 1 as an aux rod
 
 
 ## Solution
 disk - number of disks  
-start - starting peg  
-end - ending peg
+start - starting rod  
+end - ending rod
 
 ``` java
 public void towerOfHanoi(int disks) {
