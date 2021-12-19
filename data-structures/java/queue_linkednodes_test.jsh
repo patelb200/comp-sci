@@ -10,34 +10,47 @@ public class Queue<T> {
     private Node<T> head, tail;
     private final int capacity;
     private int size = 0;
+    private ReentrantLock lock = new ReentrantLock();
 
     public Queue(int capacity) {
         this.capacity = capacity;
     }
 
     public void enqueue(T element) {
-        if(!isFull()) {
-            if(this.head == null) {
-                this.head = new Node<T>(element);
-                this.tail = this.head;
-            } else {
-                Node<T> temp = new Node<T>(element);
-                this.tail.next = temp;
-                this.tail = temp;
-            }
-            size++;
-        } else
-            throw new RuntimeException("Overflow");
+        this.lock.lock();
+
+        try {
+            if(!isFull()) {
+                if(this.head == null) {
+                    this.head = new Node<T>(element);
+                    this.tail = this.head;
+                } else {
+                    Node<T> temp = new Node<T>(element);
+                    this.tail.next = temp;
+                    this.tail = temp;
+                }
+                size++;
+            } else
+                throw new RuntimeException("Overflow");
+        } finally {
+            this.lock.unlock();
+        }
     }
 
     public T dequeue() {
-        if(!isEmpty()) {
-            Node<T> temp = this.head;
-            this.head = this.head.next;
-            size--;
-            return temp.data;
-        } else
-            throw new RuntimeException("Underflow");
+        this.lock.lock();
+
+        try {
+            if(!isEmpty()) {
+                Node<T> temp = this.head;
+                this.head = this.head.next;
+                size--;
+                return temp.data;
+            } else
+                throw new RuntimeException("Underflow");
+        } finally {
+            this.lock.unlock();
+        }
     }
 
     public T peek() {

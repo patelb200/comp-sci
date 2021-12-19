@@ -25,31 +25,44 @@ public class Queue<T> {
 
     private final T[] elements;
     private int head, tail, size = 0;
+    private ReentrantLock lock = new ReentrantLock();
 
     public Queue(int capacity) {
         elements = (T[]) new Object[capacity];
     }
 
     public void enqueue(T element) throws RuntimeException {
-        if (!isFull()) {
-            size++;
-            // for wrap around
-            if (tail > elements.length - 1)
-                tail = 0;
-            elements[tail++] = element;
-        } else
-            throw new RuntimeException("Overflow");
+        lock.lock();
+
+        try {
+            if (!isFull()) {
+                size++;
+                // for wrap around
+                if (tail > elements.length - 1)
+                    tail = 0;
+                elements[tail++] = element;
+            } else
+                throw new RuntimeException("Overflow");
+        } finally {
+            lock.unlock();
+        }
     }
 
     public T dequeue() throws RuntimeException {
-        if (!isEmpty()) {
-            size--;
-            // for wrap around
-            if (head > elements.length - 1)
-                head = 0;
-            return elements[head++];
+        lock.lock();
+
+        try {
+            if (!isEmpty()) {
+                size--;
+                // for wrap around
+                if (head > elements.length - 1)
+                    head = 0;
+                return elements[head++];
+            }
+            throw new RuntimeException("Underflow");
+        } finally {
+            lock.unlock();
         }
-        throw new RuntimeException("Underflow");
     }
 
     public T peek() throws RuntimeException {
@@ -90,38 +103,48 @@ public class Queue<T> {
     private T[] elements;
     private int size;
     private final int capacity;
-    private Node<T> head;
-    private Node<T> tail;
-
+    private Node<T> head, tail;
+    private ReentrantLock lock = new ReentrantLock();
+    
     public Queue(int capacity) {
         this.capacity = capacity;
     }
 
     public void enqueue(T element) throws RuntimeException {
+        lock.lock();
 
-        if (isFull())
-            throw new RuntimeException("Overflow");
+        try {
+            if (isFull())
+                throw new RuntimeException("Overflow");
 
-        if (this.head == null) {
-            this.head = new Node<>(element, null);
-            this.tail = this.head;
-        } else {
-            this.tail.next = new Node<>(element, null);
-            this.tail = this.tail.next;
+            if (this.head == null) {
+                this.head = new Node<>(element, null);
+                this.tail = this.head;
+            } else {
+                this.tail.next = new Node<>(element, null);
+                this.tail = this.tail.next;
+            }
+
+            size++;
+        } finally {
+            lock.unlock();
         }
-
-        size++;
     }
 
     public T dequeue() throws RuntimeException {
+        lock.lock();
 
-        if (isEmpty())
-            throw new RuntimeException("Underflow");
+        try {
+            if (isEmpty())
+                throw new RuntimeException("Underflow");
 
-        Node<T> poll = this.head;
-        this.head = poll.next;
-        size--;
-        return poll.val;
+            Node<T> poll = this.head;
+            this.head = poll.next;
+            size--;
+            return poll.val;
+        } finally {
+            lock.unlock();
+        }
     }
 
     public T peek() throws RuntimeException {

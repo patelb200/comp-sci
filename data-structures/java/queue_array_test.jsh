@@ -1,7 +1,10 @@
+import java.util.concurrent.locks.ReentrantLock;
+
 public class Queue<T> {
 
     private T[] elements;
     private int head, tail, size = 0;
+    private ReentrantLock lock = new ReentrantLock();
 
     @SuppressWarnings("unchecked")
     public Queue(int capacity) {
@@ -9,23 +12,35 @@ public class Queue<T> {
     }
 
     public void enqueue(T element) {
-        if(!isFull()) {
-            if(tail == this.elements.length)
-                tail = 0;
-            this.elements[tail++] = element;
-            size++;
-        } else
-            throw new RuntimeException("Overflow");
+        this.lock.lock();
+
+        try {
+            if(!isFull()) {
+                if(tail == this.elements.length)
+                    tail = 0;
+                this.elements[tail++] = element;
+                size++;
+            } else
+                throw new RuntimeException("Overflow");
+        } finally {
+            this.lock.unlock();
+        }
     }
 
     public T dequeue() {
-        if(!isEmpty()) {
-            if(head == this.elements.length)
-                head = 0;
-            size--;
-            return this.elements[head++];
-        } else
-            throw new RuntimeException("Underflow");
+        this.lock.lock();
+        
+        try {
+            if(!isEmpty()) {
+                if(head == this.elements.length)
+                    head = 0;
+                size--;
+                return this.elements[head++];
+            } else
+                throw new RuntimeException("Underflow");
+        } finally {
+            this.lock.unlock();
+        }
     }
 
     public T peek() {
