@@ -138,7 +138,7 @@ public class HashTable<K,V> {
     }
 
     private float loadFactor() {
-        return this.size / this.entries.length;
+        return ((float) this.size()) / this.entries.length;
     }
 
     @SuppressWarnings("unchecked")
