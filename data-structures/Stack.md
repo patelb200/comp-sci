@@ -8,11 +8,9 @@ Dynamic sets that grow and shrink with a **last-in, first-out (LIFO)** policy.
 - **T pop()** - remove an element **T** from the top of the stack.
 - **T peek()** - view an element that is at the top of the stack.
 
-> [2] \|/ push /|\ pop
->
-> [1]
->
-> [0]
+> \\|/ push&nbsp;&nbsp;[2]&nbsp;&nbsp;&nbsp;/|\ pop  
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1]  
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0]
 
 ## Time Complexity
 
@@ -25,101 +23,110 @@ Dynamic sets that grow and shrink with a **last-in, first-out (LIFO)** policy.
 ### Array
 
 ```java
-public class Stack<T> {
+public class StackArray<T> {
 
     private final T[] elements;
-    private int pointer = -1;
+    private int head, size = 0;
 
-    public Stack(int capacity) {
-        elements = (T[]) new Object[capacity];
+    @SuppressWarnings("unchecked")
+    public StackArray(int capacity) {
+        this.elements = (T[]) new Object[capacity];
     }
 
-    public void push(T element) throws RuntimeException {
-        if (pointer < elements.length - 1)
-            elements[++pointer] = element;
-        else
-            throw new RuntimeException("Overflow");
+    public T peek() {
+        if (this.isEmpty())
+            throw new RuntimeException("Stack underflow");
+
+        return this.elements[this.head - 1];
     }
 
-    public T pop() throws RuntimeException {
-        if (!isEmpty()) {
-            return elements[pointer--];
-        }
-        throw new RuntimeException("Underflow");
+    public void push(T element) {
+        if (this.isFull())
+            throw new RuntimeException("Stack overflow");
+
+        this.size++;
+        this.elements[this.head++] = element;
     }
 
-    public T peek() throws RuntimeException {
-        if (!isEmpty()) {
-            return elements[pointer];
-        }
-        throw new RuntimeException("Underflow");
+    public T pop() {
+        if (this.isEmpty())
+            throw new RuntimeException("Stack underflow");
+
+        this.size--;
+        return this.elements[--this.head];
+    }
+
+    public boolean isFull() {
+        return this.elements.length == this.size();
     }
 
     public boolean isEmpty() {
-        return pointer < 0;
+        return this.size() == 0;
     }
 
     public int size() {
-        if (isEmpty())
-            return 0;
-        else
-            return pointer + 1;
+        return this.size;
     }
+
 }
 ```
 
 ### Linked Nodes
 
 ```java
-public class Stack<T> {
+public class StackLinkedNodes<T> {
 
     private static class Node<T> {
-        private T val;
-        private Node<T> next;
+        Node<T> next;
+        T data;
 
-        Node(T val, Node<T> next) {
-            this.val = val;
+        public Node(T data, Node<T> next) {
+            this.data = data;
             this.next = next;
         }
     }
 
-    private Node<T> top;
+    private Node<T> head;
     private int size;
 
+    public T peek() {
+        if (this.isEmpty())
+            throw new RuntimeException("Stack underflow");
+
+        return this.head.data;
+    }
+
     public void push(T element) {
-        if (top == null)
-            top = new Node<>(element, null);
-        else {
-            top = new Node<>(element, top);
+        if (this.isEmpty()) {
+            this.head = new Node<T>(element, null);
+        } else {
+            Node<T> temp = this.head;
+            this.head = new Node<T>(element, temp);
         }
-        size++;
+        this.size++;
     }
 
-    public T pop() throws RuntimeException {
-        if (top != null) {
-            size--;
-            Node<T> temp = top;
-            top = top.next;
-            return temp.val;
-        } else {
-            throw new RuntimeException("Underflow");
-        }
-    }
+    public T pop() {
+        if (this.isEmpty())
+            throw new RuntimeException("Stack underflow");
 
-    public T peek() throws RuntimeException {
-        if (top != null) {
-            return top.val;
-        } else {
-            throw new RuntimeException("Underflow");
-        }
+        Node<T> temp = this.head;
+        this.head = temp.next;
+        temp.next = null;
+        this.size--;
+        return temp.data;
     }
 
     public boolean isEmpty() {
-        return top == null;
+        return this.size() == 0;
     }
 
     public int size() {
-        return size;
+        return this.size;
+    }
+
+    public Node<T> getNode() {
+        return this.head;
     }
 }
 ```
