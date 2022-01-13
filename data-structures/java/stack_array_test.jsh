@@ -27,8 +27,9 @@ public class StackArray<T> {
         if (this.isEmpty())
             throw new RuntimeException("Stack underflow");
 
-        this.size--;
-        return this.elements[--this.head];
+        T temp = this.elements[--this.head];
+        this.elements[this.head] = null; // regain space
+        return temp;
     }
 
     public boolean isFull() {
