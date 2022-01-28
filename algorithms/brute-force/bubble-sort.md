@@ -1,6 +1,6 @@
 # Bubble Sort
 
-For each element in the array, compare with its adjacent element and swap if current element is out of order.
+For each element in the array, compare with its adjacent element and swap if current element is out of order. On each iteration of the array starting from 0, the largest value in the array will eventually bubble up to the end of the array.
 
 ## Time complexity
 
