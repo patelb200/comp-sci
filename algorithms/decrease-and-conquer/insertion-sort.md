@@ -7,6 +7,9 @@ For each element in the unsorted array, traverse the sorted subarray from the ri
 - `O(n^2)` - The average and worst case when the elements are unsorted.
 - `O(n)` - Best case when the elements are already sorted.
 
+## Space complexity
+- `O(1)` - No additional space is needed.
+
 ## Solution
 
 ``` java
