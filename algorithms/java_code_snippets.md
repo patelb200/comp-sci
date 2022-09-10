@@ -1,5 +1,8 @@
 # Java Code Snippets
 
+1. [Run Jshell Scripts](#run-jshell-scripts)
+2. [Arrays](#arrays)
+
 ## Run jshell scripts
 
 To run `.jsh` files, you need minimum jdk 9.
