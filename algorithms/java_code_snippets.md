@@ -35,3 +35,29 @@ Arrays.deepToString(arr);
 
 $ ==> "[[1, 3], [3, 2], [4, 2], [5, 0], [5, 1], [7, 6]]"
 ```
+
+### Conversion
+
+#### Array to List
+
+``` java
+Integer[] arr = new Integer[]{1, 2, 3, 4, 5};
+
+List<Integer> list = Arrays.asList(arr);
+```
+``` java
+int[] arr = new int[]{1, 2, 3, 4, 5};
+
+List<Integer> list = IntStream.of(arr).boxed().collect(Collectors.toList());
+```
+
+#### List to Array
+
+``` java
+List<Integer> list = new ArrayList<Integer>();
+list.add(1);
+list.add(2);
+list.add(3);
+
+int[] arr = list.stream().mapToInt(x -> x).toArray();
+```
