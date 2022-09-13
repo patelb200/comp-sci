@@ -24,14 +24,24 @@ while (num > 0) {
 1
 ```
 
-### Avoid Integer Overflow
+### Detect Integer Overflow
 
-To avoid integer overflow when summing to large numbers that the sum is greater than `Integer.MAX`;
+To detect integer overflow when summing two integers that the sum is greater than `Integer.MAX`;
 
 ``` java
 var a = Integer.MAX;
-var b = 1;
-var num = a + (b - a);
+var b = 2;
+try{
+    var result = Math.addExact(a, b);
+} catch(ArithmeticException e){
+    System.out.println("Overflow!");
+}
+
+try{
+    var result = Math.multiplyExact(a, b);
+} catch(ArithmeticException e){
+    System.out.println("Overflow!");
+}
 ```
 
 ## Iterating
