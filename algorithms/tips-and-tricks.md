@@ -142,3 +142,26 @@ To get the uppercase of a lowercase character, you subtract 32 because the corre
 var A = 'a' - 32; // A
 var a = 'A' + 32; // a
 ```
+
+### Map English Alphabet Character to Array Index
+
+When you need to count the number of english characters in a string in **constant space**, you can create an array of size 26 where 0 is the `a` bucket. 
+
+**Note:** All characters in the string should be the same case.
+
+- lowercase. ascii `a` offset
+- uppercase. ascii `A` offset
+
+``` java
+int[] alpha = new int[26];
+String s = "bharatpatel";
+
+for(int i = 0; i < s.length(); i++) {
+    alpha[s.charAt(i) - 'a']++; 
+}
+
+System.out.println(Arrays.toString(alpha));
+```
+```
+[3, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0]
+```
