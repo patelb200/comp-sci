@@ -2,6 +2,7 @@
 
 1. [Run Jshell Scripts](#run-jshell-scripts)
 2. [Arrays](#arrays)
+3. [Strings](#strings)
 
 ## Run jshell scripts
 
@@ -60,4 +61,24 @@ list.add(2);
 list.add(3);
 
 int[] arr = list.stream().mapToInt(x -> x).toArray();
+```
+
+## Strings
+
+### Check character type
+The following are different ways to determine if the character is a letter of the english alphabet or a digit;
+
+``` java
+char a = 'a';
+char one = '1';
+
+Character.isLetter(a); // true
+Character.isLetter(one); // false
+
+Character.isDigit(one); //true
+
+Character.isLetterOrDigit(a); // true
+
+int cNum = 'd' - 'a'; //3
+boolean isLowerLetter = cNum > 0 && cNum < 26; //true
 ```
