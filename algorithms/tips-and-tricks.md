@@ -14,7 +14,7 @@
 var num = 1024;
 while (num > 0) {
     System.out.println(num % 10); // remainder gives the last digit
-    num /= 10; // division will remove the 10s place
+    num /= 10; // division will remove the 1s place
 }
 ```
 ```
@@ -139,8 +139,8 @@ System.out.println(oneI); // 1
 To get the uppercase of a lowercase character, you subtract 32 because the corresponding uppercase character in the ascii table is 32 spots to the left. Vice versa.
 
 ``` java
-var A = 'a' - 32; // A
-var a = 'A' + 32; // a
+char A = 'a' - 32; // A
+char a = 'A' + 32; // a
 ```
 
 ### Map English Alphabet Character to Array Index
