@@ -3,6 +3,7 @@
 1. [Run Jshell Scripts](#run-jshell-scripts)
 2. [Arrays](#arrays)
 3. [Strings](#strings)
+4. [Linked Lists](#linked-lists)
 
 ## Run jshell scripts
 
@@ -82,3 +83,49 @@ Character.isLetterOrDigit(a); // true
 int cNum = 'd' - 'a'; //3
 boolean isLowerLetter = cNum > 0 && cNum < 26; //true
 ```
+
+## Linked Lists
+
+To reverse a linked list you need multiple pointers to change the links between the nodes.
+
+``` java
+public ListNode reverse(ListNode head) {
+    ListNode reverse = null;
+    ListNode current = head;
+    ListNode temp = null;
+
+    while(current != null) {
+        temp = current.next;
+        current.next = reverse;
+        reverse = current;
+        current = temp;
+    }
+
+    return reverse;
+}
+```
+
+**Visualize:**
+```
+(1)->(2)->(3)->(4)
+```
+Iterations:
+
+
+```
+temp: 2
+current.next: null
+reverse: 1
+current: 2
+```
+> (2)->(3)->(4)->null
+> <br>(1)->null
+
+```
+temp: 3
+current.next: 1
+reverse: 2
+current: 3
+```
+> (3)->(4)->null
+> <br>(2)->(1)->null
