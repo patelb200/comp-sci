@@ -63,6 +63,41 @@ list.add(3);
 int[] arr = list.stream().mapToInt(x -> x).toArray();
 ```
 
+### Copy array
+
+#### Using iteration
+
+``` java
+int[] original = new int[]{1, 2, 3, 4, 5};
+int[] clone = new int[original.length];
+
+for(int i: i < original.length; i++) {
+    clone[i] = original[i];
+}
+```
+
+#### Using java utilities
+
+``` java
+int[] original = new int[]{1, 2, 3, 4, 5};
+int[] clone = new int[original.length];
+
+// copy from index 0 of original to array clone start from 0 to end of clone
+System.arraycopy(original, 0, clone, 0);
+
+// copy from index 0 of original to array clone start from 0 to given length of 2
+System.arraycopy(original, 0, clone, 0, 2);
+
+// Copy original starting at index 0 and return new instance
+int[] copy = Arrays.copyOf(original);
+
+// Copy original starting at index 0 and return new instance with given length
+int[] copy = Arrays.copyOf(original, 2);
+
+// Copy original starting at given index and end at given length
+int[] copy = Arrays.copyOfRange(original, 2, 5);
+```
+
 ## Strings
 
 ### Check character type
