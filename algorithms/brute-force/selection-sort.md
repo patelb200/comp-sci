@@ -1,6 +1,6 @@
 # Selection Sort
 
-Scan the array for the smallest element and swap it with the first element. Move to the next element and do the comparision for each element to the right of the current element.
+Scan the array for the smallest element and swap it with the first element. Move to the next element and do the comparison for each element to the right of the current element.
 
 ## Time complexity
 
