@@ -73,11 +73,14 @@ do {
 The bitwise operators work on binary values such as long, int, short, char, byte
 
 ### Definition
-| Op  |     | Desc                                  |
-| --- | --- | ------------------------------------- |
-| &   | and | a and b is true                       |
-| \|  | or  | a or b is true                        |
-| ^   | xor | a and b not true or a and b not false |
+| Op  |                | Desc                                  |
+| --- | ---            | ------------------------------------- |
+| &   | and            | a and b is true                       |
+| \|  | or             | a or b is true                        |
+| ^   | xor            | a and b not true or a and b not false |
+| <<  | left shift | shifts a bit pattern to the left |
+| >>  | signed right shift | shifts a bit pattern to the right |
+| >>> | unsigned right shift | shifts a zero into the leftmost position |
 
 ### Examples
 
@@ -119,6 +122,54 @@ a ^ b; // 5
 1111
 ----
 0101
+```
+
+#### Binary Arithmetic
+
+When shifting integers, the left most 32 bit is used for the sign.
+
+```
+11111111111111111111111111111111 = -1
+01111111111111111111111111111111 = 2147483647
+
+10000000000000000000000000000000 = -2147483648
+00000000000000000000000000000000 = 0
+```
+
+##### Multiply by 2
+
+``` java
+
+Integer.toBinaryString(1); // 001 = 1
+Integer.toBinaryString(1 << 1); // 010 = 2
+Integer.toBinaryString(1 << 2); // 100 = 4
+
+Integer.toBinaryString(3); // 0011 = 3
+Integer.toBinaryString(3 << 1); // 0110 = 6
+Integer.toBinaryString(3 << 2); // 1100 = 12
+
+// Note negative integer representation
+Integer.toBinaryString(-1); // 11111111111111111111111111111111 = -1
+Integer.toBinaryString(-1 << 1); // 11111111111111111111111111111110 = -2
+Integer.toBinaryString(-1 << 2);  // 11111111111111111111111111111100 = -4
+
+```
+##### Divide by 2
+``` java
+
+Integer.toBinaryString(4); // 100 = 4
+Integer.toBinaryString(4 >> 1); // 010 = 2
+Integer.toBinaryString(4 >> 2); // 001 = 1
+
+Integer.toBinaryString(7); // 0111 = 7
+Integer.toBinaryString(7 >> 1); // 0011 = 3
+Integer.toBinaryString(7 >> 2); // 0001 = 1
+
+// Note negative integer representation
+Integer.toBinaryString(-4); // 11111111111111111111111111111100 = -4
+Integer.toBinaryString(-4 >> 1); // 11111111111111111111111111111110 = -2
+Integer.toBinaryString(-4 >> 2);  // 11111111111111111111111111111111 = -1
+
 ```
 
 
