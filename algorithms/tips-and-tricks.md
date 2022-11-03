@@ -126,7 +126,7 @@ a ^ b; // 5
 
 #### Binary Arithmetic
 
-When shifting integers, the left most 32 bit is used for the sign.
+When shifting signed integers, the left most 32 bit is used for the sign.
 
 ```
 11111111111111111111111111111111 = -1
@@ -136,7 +136,7 @@ When shifting integers, the left most 32 bit is used for the sign.
 00000000000000000000000000000000 = 0
 ```
 
-##### Multiply by 2
+##### Multiply by 2 (signed left shift)
 
 ``` java
 
@@ -154,7 +154,7 @@ Integer.toBinaryString(-1 << 1); // 11111111111111111111111111111110 = -2
 Integer.toBinaryString(-1 << 2);  // 11111111111111111111111111111100 = -4
 
 ```
-##### Divide by 2
+##### Divide by 2 (signed right shift)
 ``` java
 
 Integer.toBinaryString(4); // 100 = 4
