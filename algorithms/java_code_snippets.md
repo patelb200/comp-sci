@@ -3,6 +3,7 @@
 1. [Run Jshell Scripts](#run-jshell-scripts)
 2. [Arrays](#arrays)
 3. [Strings](#strings)
+4. [Numbers](#numbers)
 
 ## Run jshell scripts
 
@@ -116,4 +117,33 @@ Character.isLetterOrDigit(a); // true
 
 int cNum = 'd' - 'a'; //3
 boolean isLowerLetter = cNum > 0 && cNum < 26; //true
+```
+
+## Numbers
+
+### Random
+
+Multiple ways for a random number generator (RNG). Providing an upper bound results in a random integer between 0 inclusive and upper bound exclusive.
+
+#### Utilities
+``` java
+import java.security.SecureRandom;
+import java.util.Random;
+
+var upperBound = 50;
+var sr = new SecureRandom().nextInt(upperBound); // strong
+var r = new Random().nextInt(upperBound);
+var mr = (int) (Math.random() * upperBound);
+```
+
+#### Custom Range
+To get a random number inclusive from any integer instead of default 0 behavior:
+
+``` java
+var sr = new SecureRandom();
+
+public int randRange(int inc, int exc) {
+    return sr.nextInt(exc - inc) + inc;
+}
+
 ```
